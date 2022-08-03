@@ -43,7 +43,11 @@ class NCS:
 
         # Get a handle to the first enumerated device and open it
         device = mvnc.Device( devices[0] )
-        device.OpenDevice()
+        try:
+            device.OpenDevice()
+        except:
+            print("Error - Could not open NCS device")
+            quit()
 
         return device
 
@@ -140,7 +144,12 @@ class NCS:
 
     def close_ncs_device(self):
         self.graph.DeallocateGraph()
-        self.device.CloseDevice()
+
+        try:
+            self.device.CloseDevice()
+        except:
+            print("Error - could not close NCS device.")
+            quit()
         cv2.destroyAllWindows()
         
     
