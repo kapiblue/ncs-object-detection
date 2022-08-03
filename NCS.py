@@ -1,4 +1,5 @@
-#!/usr/bin/python2
+# -*- coding: utf-8 -*-
+#!/usr/bin/python3
 
 # Detect objects on a picture using
 # Intel® Movidius™ Neural Compute Stick (NCS)
