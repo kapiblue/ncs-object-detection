@@ -20,7 +20,7 @@ class NCS:
 
     device = None
     graph = None
-    CONFIDANCE_TRESHOLD = 0.6
+    CONFIDANCE_TRESHOLD = 0.60
     INTEREST_CLASS = 15 # person
     graph_path = '../MobileNetSSD/graph'
     dims = [300, 300]
