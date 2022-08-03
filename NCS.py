@@ -13,11 +13,20 @@ import argparse
 import mvnc.mvncapi as mvnc
 from time import localtime, strftime
 
+import visualize_output
+import deserialize_output
+
 class NCS:
 
     device = None
     graph = None
     CONFIDANCE_TRESHOLD = 0.6
+    INTEREST_CLASS = 15 # person
+    graph_path = '../MobileNetSSD/graph'
+    dims = [300, 300]
+    mean = [127.5, 127.5, 127.5]
+    scale = 0.00789
+    colormode = "bgr"
 
     def __init__(self):
         self.device = self.open_ncs_device()
@@ -42,7 +51,7 @@ class NCS:
     def load_graph( self, device ):
 
         # Read the graph file into a buffer
-        with open( ARGS.graph, mode='rb' ) as f:
+        with open( self.graph_path, mode='rb' ) as f:
             blob = f.read()
 
         # Load the graph buffer into the NCS
@@ -52,24 +61,26 @@ class NCS:
 
     # ---- Step 3: Pre-process the image ----------------------------------------
 
-    def pre_process_image( frame ):
+    def pre_process_image( self, frame ):
 
         # Resize image [Image size is defined by choosen network, during training]
-        img = cv2.resize( frame, tuple( ARGS.dim ) )
+        img = cv2.resize( frame, tuple( self.dims ) )
 
         # Convert RGB to BGR [OpenCV reads image in BGR, some networks may need RGB]
-        if( ARGS.colormode == "rgb" ):
+        if( self.colormode == "rgb" ):
             img = img[:, :, ::-1]
 
         # Mean subtraction & scaling [A common technique used to center the data]
         img = img.astype( numpy.float16 )
-        img = ( img - numpy.float16( ARGS.mean ) ) * ARGS.scale
+        img = ( img - numpy.float16( self.mean ) ) * self.scale
 
         return img
 
     # ---- Step 4: Read & print inference results from the NCS -------------------
 
-    def infer_image( self, img, frame ):
+    def infer_image( self, frame ):
+
+        img = self.pre_process_image(frame)
 
         # Load the image as a half-precision floating point array
         self.graph.LoadTensor( img, 'user object' )
@@ -90,7 +101,7 @@ class NCS:
         for i in range( 0, output_dict['num_detections'] ):
 
             # Filter a specific class/category
-            if( output_dict.get( 'detection_classes_' + str(i) ) == CLASS_PERSON ):
+            if( output_dict.get( 'detection_classes_' + str(i) ) == self.INTEREST_CLASS ):
 
                 cur_time = strftime( "%Y_%m_%d_%H_%M_%S", localtime() )
                 print( "Person detected on " + cur_time )
@@ -101,7 +112,7 @@ class NCS:
 
                 # Prep string to overlay on the image
                 display_str = ( 
-                    labels[output_dict.get('detection_classes_' + str(i))]
+                    self.labels[output_dict.get('detection_classes_' + str(i))]
                     + ": "
                     + str( output_dict.get('detection_scores_' + str(i) ) )
                     + "%" )
@@ -122,7 +133,7 @@ class NCS:
 
         # If a display is available, show the image on which inference was performed
         if 'DISPLAY' in os.environ:
-            cv2.imshow( 'NCS live inference', frame )
+            cv2.imshow( 'NCS inference', frame )
 
     # ---- Step 5: Unload the graph and close the device -------------------------
 
@@ -131,3 +142,4 @@ class NCS:
         self.device.CloseDevice()
         cv2.destroyAllWindows()
         
+    
