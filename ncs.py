@@ -31,7 +31,7 @@ class NCS:
 
     def __init__(self):
         self.device = self.open_ncs_device()
-        self.graph = self.load_graph
+        self.graph = self.load_graph()
 
     def open_ncs_device(self):
 

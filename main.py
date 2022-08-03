@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import NCS
+from ncs import NCS
 import cv2
 
-ncs = NCS()
+movidius = NCS()
 img = cv2.imread('photos/sample.jpg')
 
-ncs.infer_image(img)
+movidius.infer_image(img)
