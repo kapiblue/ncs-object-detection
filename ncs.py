@@ -9,7 +9,6 @@ import cv2
 import sys
 import numpy
 import ntpath
-import argparse
 
 import mvnc.mvncapi as mvnc
 from time import localtime, strftime
@@ -23,7 +22,7 @@ class NCS:
     graph = None
     CONFIDANCE_TRESHOLD = 0.60
     INTEREST_CLASS = 15 # person
-    graph_path = '../MobileNetSSD/graph'
+    graph_path = 'MobileNetSSD/graph'
     dims = [300, 300]
     mean = [127.5, 127.5, 127.5]
     scale = 0.00789
@@ -150,6 +149,7 @@ class NCS:
         except:
             print("Error - could not close NCS device.")
             quit()
+
         cv2.destroyAllWindows()
         
     
