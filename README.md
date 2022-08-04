@@ -12,7 +12,7 @@ This is also an useful guide for getting started.
 
 The code is based on the security-cam app from ncapzoo https://github.com/movidius/ncappzoo/tree/ncsdk1
 
-Run main.py for person detection of the sample image included in the /photos folder. Feel free to modify the script, for example change the model (remember to update also the labels file, dimensions and the color mode).
+Run main.py for person detection of the sample image included in the /images folder. Feel free to modify the script, for example change the model (remember to update also the labels file, dimensions and the color mode).
 
 ```python
 python main.py

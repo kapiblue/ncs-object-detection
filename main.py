@@ -4,7 +4,7 @@ from ncs import NCS
 import cv2
 
 movidius = NCS()
-img = cv2.imread('photos/sample.jpg')
+img = cv2.imread('images/sample.jpg')
 
 movidius.infer_image(img)
 
