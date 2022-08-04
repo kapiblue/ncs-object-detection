@@ -20,9 +20,11 @@ class NCS:
 
     device = None
     graph = None
+    labels= None
     CONFIDANCE_THRESHOLD = 0.60
     INTEREST_CLASS = 15 # person
     graph_path = 'MobileNetSSD/graph'
+    labels_path = 'MobileNetSSD/labels.txt'
     dims = [300, 300]
     mean = [127.5, 127.5, 127.5]
     scale = 0.00789
@@ -31,6 +33,8 @@ class NCS:
     def __init__(self):
         self.device = self.open_ncs_device()
         self.graph = self.load_graph()
+        self.labels =[ line.rstrip('\n') for line in
+              open( self.labels_path ) if line != 'classes\n']
 
     def open_ncs_device(self):
 
