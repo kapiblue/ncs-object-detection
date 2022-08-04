@@ -20,7 +20,7 @@ class NCS:
 
     device = None
     graph = None
-    CONFIDANCE_TRESHOLD = 0.60
+    CONFIDANCE_THRESHOLD = 0.60
     INTEREST_CLASS = 15 # person
     graph_path = 'MobileNetSSD/graph'
     dims = [300, 300]
@@ -52,7 +52,7 @@ class NCS:
 
 # ---- Step 2: Load a graph file onto the NCS device -------------------------
 
-    def load_graph( self, device ):
+    def load_graph(self):
 
         # Read the graph file into a buffer
         with open( self.graph_path, mode='rb' ) as f:
