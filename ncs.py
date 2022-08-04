@@ -6,9 +6,7 @@
 
 import os
 import cv2
-import sys
 import numpy
-import ntpath
 
 import mvnc.mvncapi as mvnc
 from time import localtime, strftime

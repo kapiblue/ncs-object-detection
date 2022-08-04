@@ -7,3 +7,5 @@ movidius = NCS()
 img = cv2.imread('photos/sample.jpg')
 
 movidius.infer_image(img)
+
+movidius.close_ncs_device()
