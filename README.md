@@ -24,3 +24,5 @@ python main.py
 * Intel NCS SDK
 * MobileNet SSD for object detection
 * VirtualBox with Raspberry Pi Desktop
+
+Sample image: freepik.com
